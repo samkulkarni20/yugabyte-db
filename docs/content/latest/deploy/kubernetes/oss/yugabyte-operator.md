@@ -1,7 +1,7 @@
 ---
-title: Open Source Kubernetes 
+title: Open Source Kubernetes
 linkTitle: Open Source Kubernetes
-description: Open Source Kubernetes 
+description: Open Source Kubernetes
 menu:
   latest:
     parent: deploy-kubernetes
@@ -46,7 +46,13 @@ Clone [yugabyte-k8s-operator](https://github.com/yugaByte/yugabyte-k8s-operator/
 
 ## Deploy a YugabyteDB cluster with this operator
 
-To create a YugabyteDB cluster, first we need to setup RBAC for operator and create the operator itself. Run the following command, from root of the repository, to do the same.
+To create a YugabyteDB cluster, first we need to register the custom resource that would represent YugabyteDB cluster: `ybclusters.yugabyte.com`.
+
+```sh
+kubectl create -f deploy/crds/yugabyte_v1alpha1_ybcluster_crd.yaml
+```
+
+Setup RBAC for operator and create the operator itself. Run the following command, from root of the repository, to do the same.
 
 ```sh
 kubectl create -f deploy/operator.yaml
@@ -56,12 +62,6 @@ After a few seconds the operator should be up & running. Verify the operator sta
 
 ```sh
 kubectl -n yb-operator get po,deployment
-```
-
-Register the custom resource that would represent YugabyteDB cluster: `ybclusters.yugabyte.com`.
-
-```sh
-kubectl create -f deploy/crds/yugabyte_v1alpha1_ybcluster_crd.yaml
 ```
 
 Finally create an instance of the custom resource with which the operator would create a YugabyteDB cluster.
